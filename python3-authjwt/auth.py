@@ -2,7 +2,6 @@
 
 import logging
 from flask import request
-from flask_restful import abort
 import jwt
 
 
@@ -16,7 +15,8 @@ def authenticate_client(client_entity):
             authorization = headers.get('Authorization')
 
             if not authorization:
-                abort(403, message='Unauthorized')
+                logging.error("Unauthorized")
+                setattr(self, "error", (403, 'Unauthorized'))
 
             auth_type, token = authorization.split()
 
@@ -31,7 +31,7 @@ def authenticate_client(client_entity):
                     setattr(self, "client", payload_decoded)
                 except jwt.ExpiredSignatureError:
                     logging.error("Signature has expired")
-                    abort(403, "Signature has expired")
+                    setattr(self, "error", (403, 'Unauthorized'))
 
             return origin(self, *args, **args)
 

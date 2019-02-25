@@ -1,6 +1,9 @@
 """Config file."""
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='python3-authjwt',
     version='0.0.1',
@@ -10,6 +13,6 @@ setup(
     author_email='catocaceres@hotmail.com',
     license='MIT',
     packages=['python3-authjwt'],
-    install_requires=['PyJWT', 'google-cloud-datastore'],
+    install_requires=['PyJWT', 'Flask' 'google-cloud-datastore'],
     zip_safe=False
 )
